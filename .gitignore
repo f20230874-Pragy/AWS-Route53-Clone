@@ -1,0 +1,7 @@
+node_modules/
+.next/
+__pycache__/
+*.db
+*.db-*
+.pytest_cache/
+next-env.d.ts

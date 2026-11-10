@@ -1,0 +1,20 @@
+# Render Blueprint: New > Blueprint > pick this repo. Deploys API + web UI.
+services:
+  - type: web
+    name: r53-backend
+    runtime: docker
+    dockerContext: ./backend
+    dockerfilePath: ./backend/Dockerfile
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - { key: DATABASE_URL, value: "sqlite:////tmp/route53.db" }
+  - type: web
+    name: r53-frontend
+    runtime: docker
+    dockerContext: ./frontend
+    dockerfilePath: ./frontend/Dockerfile
+    plan: free
+    envVars:
+      - key: BACKEND_URL
+        fromService: { type: web, name: r53-backend, property: hostport }
